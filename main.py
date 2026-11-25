@@ -13,6 +13,10 @@ FORTUNE = "You will hallucinate once today. It will be the best idea in the meet
 
 
 def main() -> None:
+    # The gate allows 1 to 200 characters: fail loudly here rather than
+    # shipping a fortune the scorer would refuse.
+    if not 1 <= len(FORTUNE) <= 200:
+        raise SystemExit("fortune must be 1-200 characters")
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
